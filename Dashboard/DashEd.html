@@ -58,10 +58,12 @@ SOFTWARE.
             init: async function () {
                 // first figure out the app id of the dashboard and the user's access token
                 var dashboardsHtml = await $.get("/dashboards");
-                var re = /\/apps\/api\/(\d+)\/menu\?access_token=([\w-]+)/
-                var match = dashboardsHtml.match(re);
+                var re1 = /globalDashboardAppId = ([\w-]+);/
+                var re2 = /globalDashboardAccessToken = '([\w-]+)';/
+                var match = dashboardsHtml.match(re1);
                 this.dashboardAppId = match[1];
-                this.accessToken = match[2];
+                match = dashboardsHtml.match(re2);
+                this.accessToken = match[1];
 
                 // now get the list of the dashboards
                 var menuHtml = await $.get(this.getDashboardMenuUrl());
